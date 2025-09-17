@@ -42,4 +42,23 @@ void display(List* L, int data){
         printf("[%d]", L->arr[i]);
     }
 }
+ 
+void removeFirst(List* L){
+    for (int i = 0; i < L->count - 1; i++){
+        L->arr[i] = L->arr[i - 1];
+    }
+    L->count--;
+}
+
+void removeLast(List *L){
+    L->count--;
+}
+
+void removeAtIndex(List* L, int position){
+    for (int i = position; i < L->count; i++){
+        L->arr[i] = L->arr[i + 1];
+    }
+    L->count--;
+}
+
 #endif
