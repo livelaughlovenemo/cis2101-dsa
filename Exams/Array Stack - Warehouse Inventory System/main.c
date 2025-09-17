@@ -4,9 +4,7 @@
 #include "arrayStack.h"
 
 int main() {
-    // write your code here
-
-
+  
     Stack stacks[3];
     for (int i = 0; i < 3; i++){
         initialize(&stacks[i]);

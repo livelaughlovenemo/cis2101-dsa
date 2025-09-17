@@ -2,8 +2,6 @@
 #include <stdbool.h>
 #include "types.h"
 
-// write your functions here
-
 #ifndef ARRAYSTACK_H
 #define ARRAYSTACK_H
 #define MAX 5
