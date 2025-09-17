@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "types.h"
+#define MAX 10
+
+
+int main(){
+    List L;
+    initialize(&L);
+    
+    int size, num, choice, data, position;
+    while(1){
+        
+    printf("\nChoose an option:\n1. Insert First\n2. Insert Last\n3. Insert at Index\n4. Display\n5. Exit\nChoice: ");
+    scanf("%d", &choice);
+    
+    switch(choice){
+        case 1:
+        printf("Enter data to insert: ");
+        scanf("%d", &data);
+        insertFirst(&L, data);
+
+        break;
+        case 2:
+        printf("Enter data to insert: ");
+        scanf("%d", &data);
+        insertLast(&L, data);
+
+        break;
+        case 3:
+        printf("Enter data to insert: ");
+        scanf("%d", &data);
+        printf("Insert where: ");
+        scanf("%d", &position);
+        insertAtIndex(&L, data, position);
+        break;
+
+        case 4:
+        display(&L, data);
+        break;
+
+        case 5:
+        return 0;
+        break;
+
+        default:
+        printf("WRONG!");
+        break;
+        
+    }
+}
+}
