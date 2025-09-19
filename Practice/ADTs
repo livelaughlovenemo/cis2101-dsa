@@ -11,7 +11,7 @@ int main(){
     int size, num, choice, data, position;
     while(1){
         
-    printf("\nChoose an option:\n1. Insert First\n2. Insert Last\n3. Insert at Index\n4. Display\n5. Exit\n6. Delete First\n7. Delete Last\n8. Delete At Index\nChoice: ");
+    printf("\nChoose an option:\n1. Insert First\n2. Insert Last\n3. Insert at Index\n4. Display\n5. Delete First\n6. Delete Last\n7. Delete At Index\n8. Exit\nChoice: ");
     scanf("%d", &choice);
     
     switch(choice){
@@ -40,22 +40,22 @@ int main(){
         break;
 
         case 5:
-        return 0;
+        removeFirst(&L);
         break;
         
         case 6:
-        removeFirst(&L);
+        removeLast(&L);
         
         break;
         
         case 7:
-        removeLast(&L);
-        break;
-        
-        case 8:
         printf("Delete where: ");
         scanf("%d", &position);
         removeAtIndex(&L, position);
+        break;
+        
+        case 8:
+        return 0;
         break;
         
         default:
