@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-
 #define MAX 10
+
+// types.h for ADTs.c
 
 typedef struct {
     int arr[MAX];
