@@ -6,12 +6,9 @@
 void enqueue(Queue *q, int elem) {
     
     // [1.0] To do code logic here...
-    if(q->length == MAX_SIZE){
-        printf("Queue is full! Cannot enqueue %d.\n", elem);
-        return;
-    }
-    int rear = (q->front + q->length) % MAX_SIZE;
-    q->array[rear] = elem;
+    if(q->length == MAX_SIZE) return;
+    q->length = (q->length + 1) % MAX_SIZE;
+    q->array[q->length - 1] = elem;
     q->length++;
     
 }
@@ -20,15 +17,9 @@ void enqueue(Queue *q, int elem) {
 int dequeue(Queue *q) {
     // [2.0] To do logic here...
     // Change the return to the actual value. Return -1 if empty.
-    
-    if(q->length == 0){ 
-        printf("Queue is empty! Cannot dequeue.\n");
-        return -1;
-    }
-    
+    if(q->length == 0) return -1;
     int result = q->array[q->front];
     q->front = (q->front + 1) % MAX_SIZE;
-    q->length--;
     
     return result;
 }
