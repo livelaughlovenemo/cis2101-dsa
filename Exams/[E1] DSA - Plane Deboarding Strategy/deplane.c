@@ -4,34 +4,57 @@
 #include <string.h>
 #include "types.h"
 
-// Deplane passengers: front row (0) -> back row (MAX_ROWS-1)
-// Within each row: ABC group (left side) and DEF group (right side)
-// Pops passengers until both stacks are empty
 void deplanePassengers(BoardingList* list) {
-    printf("\n=== Deplaning Passengers ===\n");
+    printf("\nDeplaning passengers...\n");
+    bool prevLeftTurn = false;
+    bool leftTurn = true;       // Start with left group
 
-    for (int i = 0; i < MAX_ROWS; i++) {
-        Row* row = &list->seatRows[i];
+    int row = 0;
+    while (list->passengerCount > 0) {
+        row = 0;
+        leftTurn = prevLeftTurn = !prevLeftTurn;
+        while (row < MAX_ROWS) {
+            Group* currentGroup = leftTurn ? &list->seatRows[row].ABC : &list->seatRows[row].DEF;
+            bool groupHasPassengers = leftTurn ? !isEmpty_v1(currentGroup) : !isEmpty_v2(currentGroup);
 
-        // Deplane from ABC stack (Aisle → Middle → Window)
-        while (!isEmpty_v1(&row->ABC)) {
-            Passenger* p = &row->ABC.p[row->ABC.top];
-            printf("Passenger %s from row %d (ABC) has deplaned.\n",
-                   p->passengerName, i + 1);
-            pop_v1(&row->ABC);
-            list->passengerCount--;
-        }
-
-        // Deplane from DEF stack (Aisle → Middle → Window)
-        while (!isEmpty_v2(&row->DEF)) {
-            Passenger* p = &row->DEF.p[row->DEF.top - 1];
-            printf("Passenger %s from row %d (DEF) has deplaned.\n",
-                   p->passengerName, i + 1);
-            pop_v2(&row->DEF);
-            list->passengerCount--;
+            if (groupHasPassengers) {
+                // Deplane all passengers from the current group
+                while (leftTurn ? !isEmpty_v1(currentGroup) : !isEmpty_v2(currentGroup)) {
+                    int idx = leftTurn ? currentGroup->top : (currentGroup->top >= 0 && currentGroup->top < MAX_PASSENGERS ? currentGroup->top: 0);
+                    printf("Deplaning %s from row %d, seat %s\n", currentGroup->p[idx].passengerName, row + 1, leftTurn ? "ABC" : "DEF");
+                    if (leftTurn) {
+                        pop_v1(currentGroup);
+                    } else {
+                        pop_v2(currentGroup);
+                    }
+                    list->passengerCount--;
+                }
+                leftTurn = !leftTurn;  // Switch sides for next group
+                row += 3;              // Skip two rows
+            } else {
+                // If current group is empty, check opposite group
+                Group* oppositeGroup = leftTurn ? &list->seatRows[row].DEF : &list->seatRows[row].ABC;
+                bool oppositeHasPassengers = leftTurn ? !isEmpty_v2(oppositeGroup) : !isEmpty_v1(oppositeGroup);
+                if (oppositeHasPassengers) {
+                    // Deplane all passengers from the current group
+                    while (leftTurn ? !isEmpty_v2(oppositeGroup) : !isEmpty_v1(oppositeGroup)) {
+                        int idx = leftTurn ? (oppositeGroup->top >= 0 && oppositeGroup->top < MAX_PASSENGERS ? oppositeGroup->top: 0) : oppositeGroup->top;
+                        printf("Deplaning %s from row %d, seat %s\n", oppositeGroup->p[idx].passengerName, row + 1, leftTurn ? "DEF" : "ABC");
+                        if (leftTurn) {
+                            pop_v2(oppositeGroup);
+                        } else {
+                            pop_v1(oppositeGroup);
+                        }
+                        list->passengerCount--;
+                    }
+                    row += 3;  // Skip two rows
+                } else {
+                    // Both groups are empty, move to the next row
+                    row++;
+                }
+            }
         }
     }
-
-    printf("All passengers have deplaned. Remaining count: %d\n",
-           list->passengerCount);
+    printf("\nAll passengers have been deplaned.\n");
 }
+
