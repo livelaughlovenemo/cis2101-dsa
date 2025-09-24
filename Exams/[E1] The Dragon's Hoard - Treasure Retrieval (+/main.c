@@ -4,11 +4,39 @@
 
 // TREASURE RETRIEVAL ENCHANTMENT (Pop Function)
 void retrieveTreasure(Stack *s) {
-    // [Task 1] To do code logic...
+    if (s == NULL) {
+        printf("No satchel found!\n");
+        return;
+    }
 
+    // Check if the satchel is empty
+    if (s->top == -1) {
+        printf("Retrieval FAILED - Satchel is empty!\n");
+        return;
+    }
 
+    // Index of the top treasure node
+    int topIndex = s->top;
+    Node *node = &s->vs->nodes[topIndex];
 
+    // Copy the item for display
+    Item retrieved = node->item;
+
+    // Update the satchel: move top to the next node
+    s->top = node->next;
+
+    // Reduce current weight
+    s->currentWeight -= retrieved.weight;
+
+    // Deallocate node manually (add back to free list)
+    node->next = s->vs->avail;
+    s->vs->avail = topIndex;
+
+    // Display retrieved treasure
+    printf("Retrieved '%c': SUCCESS (Remaining: %.1f)\n", 
+       retrieved.itemName, s->currentWeight);
 }
+
 
 
 // Main adventure function
