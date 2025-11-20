@@ -4,7 +4,6 @@ Problem Statement
 
 Create a C program that inserts, deletes, and searches the RGB value in an open hashing dictionary using array of linked list implementation.
 
-
 All you have to do is write the following functions inside dict.c. The main function and struct definitions are already provided.
 
 hashFunction() - A weighted sum of the R, G, and B components is calculated, and the result is constrained by the PALETTE_SIZE.
@@ -12,7 +11,6 @@ createDictionary() - Initializes the hash table by setting all 64 bucket pointer
 createNode(Color) - Allocates memory for a new Node and initializes it with the provided Color data.
 insertColor() - Calculates the hash index and inserts the new Color's node at the head of the corresponding linked list (chaining).
 searchColor() - Calculates the hash index, then traverses the linked list at that index. It performs a full RGB value comparison to find the correct entry among potential collisions.
- 
 Tips
 hashFunction(int rgb[3])
 
