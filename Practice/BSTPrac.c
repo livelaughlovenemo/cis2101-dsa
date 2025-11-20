@@ -79,6 +79,63 @@ replace trav with LC
 
 */
 
+Node* deleteNode(BST *B, int value) {
+    BST *trav = B;
+
+    // Step 1: Find the node
+    while (*trav != NULL && (*trav)->data != value) {
+        trav = (value > (*trav)->data)
+                ? &((*trav)->RC)
+                : &((*trav)->LC);
+    }
+
+    // Value NOT found
+    if (*trav == NULL) return NULL;
+
+    Node *target = *trav;
+
+    // CASE 1: Leaf node
+    if (target->LC == NULL && target->RC == NULL) {
+        *trav = NULL;
+        free(target);
+        return NULL;
+    }
+
+    // CASE 2: One child (LEFT only)
+    if (target->LC != NULL && target->RC == NULL) {
+        *trav = target->LC;
+        free(target);
+        return *trav;
+    }
+
+    // CASE 2: One child (RIGHT only)
+    if (target->LC == NULL && target->RC != NULL) {
+        *trav = target->RC;
+        free(target);
+        return *trav;
+    }
+
+    // CASE 3: Two children
+    // Get INORDER SUCCESSOR = leftmost of RIGHT subtree
+    BST *succTrav = &target->RC;
+    while ((*succTrav)->LC != NULL) {
+        succTrav = &((*succTrav)->LC);
+    }
+
+    // Copy successor data → target
+    target->data = (*succTrav)->data;
+
+    // Delete successor node
+    Node *succ = *succTrav;
+
+    // Successor may have right child only
+    *succTrav = (succ->RC != NULL) ? succ->RC : NULL;
+
+    free(succ);
+    return *trav;
+}
+
+
 int main() {
     BST B = NULL;
 
