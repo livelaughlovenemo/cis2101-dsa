@@ -12,7 +12,6 @@ int* bitmaskToArray(short int word[]) - this function takes the array of integer
 char* decodeString(int arr[]) - this function takes the bit vector array and returns the 8 letter string
 void displayBitPattern(int arr[]) - this function displays the bit pattern of the bit vector array
  
-
 Notes:
 Remember to terminate the end of the string with \0
 Bit vector array is where each index of the array represents a boolean value: 0 or 1
@@ -21,11 +20,9 @@ Remember one character is 8 bits, given a binary 01011001 is 89 in decimal, it r
 Decoding Guide:
  
 Given the short integer value 22863, it is represented in bits as 0101100101001111. Those bits are then stored in a bit vector array and then converted to represent 2 letters.
-
 short int val = 22863
 bit representation: 0101100101001111
            letters: YO
-
 
 Sample Output 1:
 === Sabado Cipher ===
