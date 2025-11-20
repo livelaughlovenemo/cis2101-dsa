@@ -1,0 +1,73 @@
+Edwin Bartlett - Open Hashing
+
+Problem Statement
+
+Create a C program that inserts, deletes, and searches the RGB value in an open hashing dictionary using array of linked list implementation.
+
+
+All you have to do is write the following functions inside dict.c. The main function and struct definitions are already provided.
+
+hashFunction() - A weighted sum of the R, G, and B components is calculated, and the result is constrained by the PALETTE_SIZE.
+createDictionary() - Initializes the hash table by setting all 64 bucket pointers to NULL.
+createNode(Color) - Allocates memory for a new Node and initializes it with the provided Color data.
+insertColor() - Calculates the hash index and inserts the new Color's node at the head of the corresponding linked list (chaining).
+searchColor() - Calculates the hash index, then traverses the linked list at that index. It performs a full RGB value comparison to find the correct entry among potential collisions.
+ 
+Tips
+hashFunction(int rgb[3])
+
+Use the following prime numbers to minimize collisions:
+R is multiplied by 3.
+G is multiplied by 5.
+B is multiplied by 7.
+Apply modulo (%) with the size of the hash table.
+ 
+createDictionary(Dictionary *dict)
+
+Iterate through the entire buckets array from index 0 up to PALETTE_SIZE - 1 and set the value of each element to NULL.
+ 
+createNode(Color newColor)
+
+Basically allocating memory for a new node and setting the data.
+Don't forget to use strcpy for the colorName.
+ 
+insertColor(Dictionary *dict, Color newColor)
+
+Calculate the index using the hashFunction, create the new node using createNode, and then insert it at the head of the list.
+ 
+searchColor(Dictionary *dict, int rgb[3])
+
+Calculate the index using the hashFunction, then traverse through each node of the list and check if all three values (R, G, and B) match.
+
+Sample Output 1:
+--- Inserting Colors ---
+-> Inserted 'Red' (RGB: 255, 0, 0) into bucket [61].
+-> Inserted 'Green' (RGB: 0, 255, 0) into bucket [59].
+-> Inserted 'Blue' (RGB: 0, 0, 255) into bucket [57].
+-> Inserted 'White' (RGB: 255, 255, 255) into bucket [49].
+-> Inserted 'Black' (RGB: 0, 0, 0) into bucket [0].
+-> Inserted 'Dark Grey' (RGB: 10, 10, 10) into bucket [22].
+-> Inserted 'Dark Red' (RGB: 30, 0, 0) into bucket [26].
+
+--- Inserting Colliding Colors ---
+-> Inserted 'Light Grey' (RGB: 1, 1, 1) into bucket [15].
+-> Inserted 'Slightly Red' (RGB: 5, 0, 0) into bucket [15].
+
+--- Color Dictionary Content ---
+Bucket [0]: Black (0,0,0)
+Bucket [15]: Slightly Red (5,0,0) -> Light Grey (1,1,1)
+Bucket [22]: Dark Grey (10,10,10)
+Bucket [26]: Dark Red (30,0,0)
+Bucket [49]: White (255,255,255)
+Bucket [57]: Blue (0,0,255)
+Bucket [59]: Green (0,255,0)
+Bucket [61]: Red (255,0,0)
+--------------------------------
+
+--- Search Results ---
+Searching for RGB (255, 0, 0) in bucket [61]...
+SUCCESS: Found Color: Red
+Searching for RGB (5, 0, 0) in bucket [15]...
+SUCCESS: Found Color: Slightly Red
+Searching for RGB (255, 165, 0) in bucket [54]...
+FAILURE: Color not found.
