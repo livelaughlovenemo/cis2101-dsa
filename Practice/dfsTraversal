@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX 9
+#define VISITED -1
+#define UNVISITED 100
+
+typedef struct node {
+    int elem;
+    Struct node *link;
+} *ptr, Node;
+
+typedef ptr Graph[MAX];
+
+typedef int vertex;
+
+void dfs (Graph G, vertex v, int mark[]){
+    
+}
+
+int main(){
+    
+}
