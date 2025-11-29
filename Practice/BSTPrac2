@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef char String[32];
+
+typedef struct {
+    int book_id;
+    String book_name;
+} Book;
+
+typedef struct node {
+    Book book;
+    struct node *left
+    struct node *right;
+} *BST;
+
+void insertNode(BST *root, Book newBook){
+    BST* temp = root;
+    
+    while(*temp != NULL && (*temp)->book_id != newBook.book_id){
+        temp = (newBook.book_id) > (*temp)->book.book_id
+        ? &((*temp)->right)
+        : &((*temp)->left);
+    }
+    
+    if(*temp == NULL){
+        *temp = (BST)calloc(1,sizeof(struct node));
+        (*temp)->book = newBook;
+    }
+    
+    /*malloc version
+    
+    if (*temp == NULL){
+        BST *trav = (BST)malloc(sizeof(struct node));
+        trav->LC = NULL;
+        trav->RC = NULL;
+        trav->book.id = newBook.id;
+        *trav = temp;
+    }
+    */
+}

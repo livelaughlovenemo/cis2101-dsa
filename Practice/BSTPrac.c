@@ -8,13 +8,13 @@ typedef struct node {
     struct node *RC;
 } Node, *BST;
 
-void insert(BST* B, int value){
-    BST* trav = B;
+void insert(BST* root, int value){
+    BST* trav = root;
 
-    while(*trav != NULL && (*trav)->data != value){
-        trav = (value >(*trav)->data) 
-        ? &((*trav)->RC)
-        : &((*trav)->LC);
+    while(*trav != NULL && (*trav)->data != value){ // (*trav)->data is the root 
+        trav = (value >(*trav)->data)  // set the value of trav into value should be greater than the root 
+        ? &((*trav)->RC) // if greater siya agi siyas right node hence RC 
+        : &((*trav)->LC); //else lesser siya so left siya moagi
     }
     //CALLOC VERSION
     if (*trav == NULL){
