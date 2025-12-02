@@ -1,0 +1,24 @@
+Parent Pointer Tree 👩‍🍼👉🌳 by Edwin Bartlett
+
+Sample Output 1:
+
+--- Tree Array Representation ---
+Index (Child) | Parent
+--------------|-------
+            0 | ROOT
+            1 | 0
+            2 | 0
+            3 | 1
+            4 | 1
+            5 | 2
+            6 | (Uninitialized)
+            7 | (Uninitialized)
+            8 | 5
+            9 | 5
+---------------------------------
+
+--- Testing ADT Operations ---
+Parent of Node 5: Node 2
+Parent of Node 0: (It is the Root)
+Leftmost Leaf: Node 3
+Rightmost Leaf: Node 9
