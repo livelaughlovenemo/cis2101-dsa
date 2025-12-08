@@ -9,8 +9,57 @@
  * @param key_data The string key to delete.
  * @return BST The new root of the BST after deletion.
  */
+
+
+BST findMin(BST root){
+    while (root->LC != NULL){
+        root = root->LC;
+    }
+    return root;
+}
+
 BST deleteNode(BST root, const char *key_data) {
     // TODO...
+    if (root == NULL){
+        printf("Key \"%s\" not found for deletion.\n", key_data);
+        return NULL;
+    }
+    
+    int cmp = strcmp(key_data, root->key);
+    
+    if (cmp < 0){
+        root->LC = deleteNode(root->LC, key_data);
+    } else if (cmp > 0){
+        root->RC = deleteNode(root->RC, key_data);
+    }
+    
+    else {
+        // leaf node
+        if (root->LC == NULL && root->RC == NULL){
+            free(root->key);
+            free(root);
+            return NULL;
+        } else if (root->LC == NULL){ // one child with right  only
+            BST temp = root->RC;
+            free(root->key);
+            free(root);
+            return temp;
+        } else if (root->RC == NULL){ // one child with left only 
+            BST temp = root->LC;
+            free(root->key);
+            free(root);
+            return temp;
+        } 
+        // two children
+            BST successor = findMin(root->RC);
+            free(root->key);
+            root->key = malloc(strlen(successor->key) +1);
+            strcpy(root->key,successor->key);
+            root->RC = deleteNode(root->RC, successor->key);
+        
+    } 
+    return root;
+    
 }
 
 int main() {
