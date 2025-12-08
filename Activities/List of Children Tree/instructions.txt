@@ -1,0 +1,31 @@
+List of Children Tree 📃👧🌳 by Edwin Bartlett
+
+The List of Children representation of a tree is described by and array of 
+linked list where the indices are parents and the nodes are children.
+
+Sample Output 1
+
+--- Tree Children List Representation ---
+Root Index: 0
+Parent Index | Children List
+-------------|---------------
+           0 | 2 -> 1 -> NULL
+           1 | 4 -> 3 -> NULL
+           2 | 5 -> NULL
+           3 | (None)
+           4 | (None)
+           5 | 9 -> 8 -> NULL
+           6 | (None)
+           7 | (None)
+           8 | (None)
+           9 | (None)
+-----------------------------------------
+
+--- Testing ADT Operations ---
+Parent of Node 5: Node 2
+Parent of Node 0: (It is the Root)
+Parent of Node 7: (Node is Invalid/Not Found)
+Leftmost Leaf: Node 3
+Rightmost Leaf: Node 9
+
+Tree memory cleaned up.
