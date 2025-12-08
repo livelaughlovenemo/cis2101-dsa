@@ -12,36 +12,74 @@ typedef struct node {
    struct node* RC;   // Right Child pointer
 } Node, *BST;
 
-
 void insert(BST *tree, const char *key_data) {
-    // TODO...
+    BST* trav = tree;
+    
+    // Traverse the tree to find insertion point
+    while (*trav != NULL) {
+        int cmp = strcmp(key_data, (*trav)->key);
+        
+        if (cmp == 0) {
+            // Duplicate found - return without inserting
+            return;
+        } else if (cmp > 0) {
+            // Go to right child
+            trav = &((*trav)->RC);
+        } else {
+            // Go to left child
+            trav = &((*trav)->LC);
+        }
+    }
+    
+    // Create new node
+    *trav = (BST)calloc(1, sizeof(Node));
+    
+    // Allocate memory for key and copy the string
+    (*trav)->key = (char*)malloc(strlen(key_data) + 1);
+    strcpy((*trav)->key, key_data);
+    
+    // Initialize children to NULL (already done by calloc)
+    (*trav)->LC = NULL;
+    (*trav)->RC = NULL;
 }
 
 void inorderTraversal(BST tree) {
-    // TODO...
+    if(tree != NULL){
+        inorderTraversal(tree->LC);
+        printf("%s ", tree->key);
+        inorderTraversal(tree->RC);
+    }
 }
 
 void preorderTraversal(BST tree) {
-    // TODO...
+    if(tree != NULL){
+        printf("%s ", tree->key);
+        preorderTraversal(tree->LC);
+        preorderTraversal(tree->RC);
+    }
 }
 
 void postorderTraversal(BST tree) {
-    // TODO...
+    if(tree != NULL){
+        postorderTraversal(tree->LC);
+        postorderTraversal(tree->RC);
+        printf("%s ", tree->key);
+    }
 }
 
 /**
  * @brief Frees all memory allocated for the BST nodes, including the string keys.
- * * @param tree The root of the tree to destroy.
+ * @param tree The root of the tree to destroy.
  */
 void destroyTree(BST tree) {
     if (tree != NULL) {
         destroyTree(tree->LC);
         destroyTree(tree->RC);
-
+        
         if (tree->key != NULL) {
             free(tree->key);
         }
-
+        
         free(tree);
     }
 }
@@ -52,9 +90,7 @@ int main() {
 
     printf("--- Initializing and Inserting String Data into BST ---\n");
 
-    // Root: 'Mango'
-    // Left: 'Apple', 'Banana'
-    // Right: 'Pineapple', 'Grape', 'Orange', 'Kiwi'
+    // Insert fruits in given order
     insert(&myTree, "Mango");
     insert(&myTree, "Apple");
     insert(&myTree, "Pineapple");
@@ -68,19 +104,19 @@ int main() {
 
     printf("\n\n--- BST Traversal Results ---\n");
 
-    // In-Order: Sorted (A, B, G, K, M, O, P)
+    // In-Order: Sorted alphabetically
     printf("1. In-Order Traversal (Left-Root-Right, Sorted):\n");
     printf("   ");
     inorderTraversal(myTree);
     printf("\n\n");
 
-    // Pre-Order: Root first (M, A, B, P, G, K, O)
+    // Pre-Order: Root first
     printf("2. Pre-Order Traversal (Root-Left-Right):\n");
     printf("   ");
     preorderTraversal(myTree);
     printf("\n\n");
 
-    // Post-Order: Root last (B, A, K, O, G, P, M)
+    // Post-Order: Root last
     printf("3. Post-Order Traversal (Left-Right-Root):\n");
     printf("   ");
     postorderTraversal(myTree);
