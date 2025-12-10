@@ -6,7 +6,7 @@
 typedef struct {
     int elem[MAX];
     int count;
-} List;
+} List; //static array, accessed by value 
 
 List initialize(List L);
 List insertPos(List L, int data, int position);
